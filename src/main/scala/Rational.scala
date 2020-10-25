@@ -1,5 +1,7 @@
+package alsiola.Rational
+
 case class Rational(n: Int, d: Int) {
-  require(d != 0)
+  require(d != 0, "Denominator must be greater than zero")
   val g = gcd(n.abs, d.abs);
   val numerator = n / g
   val denominator = d / g
