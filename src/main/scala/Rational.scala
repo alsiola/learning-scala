@@ -42,6 +42,10 @@ case class Rational(n: Int, d: Int) {
   def -(other: Int): Rational = this - Rational(other)
   def *(other: Int): Rational = this * Rational(other)
   def /(other: Int): Rational = this / Rational(other)
+  def +(other: Double): Rational = this + Rational(other)
+  def -(other: Double): Rational = this - Rational(other)
+  def *(other: Double): Rational = this * Rational(other)
+  def /(other: Double): Rational = this / Rational(other)
 
   def reciprocal = Rational(denominator, numerator)
 
@@ -54,14 +58,24 @@ case class Rational(n: Int, d: Int) {
 
 object Rational {
   implicit def intToRational(n: Int): Rational = Rational(n)
+  implicit def floatToRational(n: Double): Rational = {
+    var m = 1
+    var a = n
+
+    while (a - a.floor > 0) {
+      a *= m
+      m *= 10
+    }
+
+    Rational(a.toInt, m / 10)
+  }
   def apply(n: Int, d: Int): Rational = new Rational(n, d)
-  def apply(n: Int): Rational = new Rational(n)
+  def apply(n: Int): Rational = apply(n, 1)
+  def apply = floatToRational _
 }
 
 object Program extends App {
-  val x = Rational(1, 2)
-  val y = Rational(2, 4);
-  val z = Rational(4, 10)
+  val x = Rational(1, 5)
 
-  println(1 + x * y / z)
+  println(0.4 + x)
 }
