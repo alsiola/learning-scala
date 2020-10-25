@@ -15,6 +15,8 @@
         ],
         "classpath": [
             "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.1/scala-library-2.13.1.jar",
+            "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.0/scalactic_2.13-3.2.0.jar",
+            "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.1/scala-reflect-2.13.1.jar",
             "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/1.1.2/scala-parser-combinators_2.13-1.1.2.jar"
         ],
         "out": "/Users/alexyoung/Code/scala-api/hello-world/.bloop/hello-world",
@@ -106,6 +108,40 @@
         "resolution": {
             "modules": [
                 {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parser-combinators_2.13",
+                    "version": "1.1.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-parser-combinators_2.13",
+                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/1.1.2/scala-parser-combinators_2.13-1.1.2.jar"
+                        },
+                        {
+                            "name": "scala-parser-combinators_2.13",
+                            "classifier": "sources",
+                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/1.1.2/scala-parser-combinators_2.13-1.1.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-reflect",
+                    "version": "2.13.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-reflect",
+                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.1/scala-reflect-2.13.1.jar"
+                        },
+                        {
+                            "name": "scala-reflect",
+                            "classifier": "sources",
+                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.1/scala-reflect-2.13.1-sources.jar"
+                        }
+                    ]
+                },
+                {
                     "organization": "org.scala-lang",
                     "name": "scala-library",
                     "version": "2.13.1",
@@ -123,19 +159,19 @@
                     ]
                 },
                 {
-                    "organization": "org.scala-lang.modules",
-                    "name": "scala-parser-combinators_2.13",
-                    "version": "1.1.2",
+                    "organization": "org.scalactic",
+                    "name": "scalactic_2.13",
+                    "version": "3.2.0",
                     "configurations": "default",
                     "artifacts": [
                         {
-                            "name": "scala-parser-combinators_2.13",
-                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/1.1.2/scala-parser-combinators_2.13-1.1.2.jar"
+                            "name": "scalactic_2.13",
+                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.0/scalactic_2.13-3.2.0.jar"
                         },
                         {
-                            "name": "scala-parser-combinators_2.13",
+                            "name": "scalactic_2.13",
                             "classifier": "sources",
-                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.13/1.1.2/scala-parser-combinators_2.13-1.1.2-sources.jar"
+                            "path": "/Users/alexyoung/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalactic/scalactic_2.13/3.2.0/scalactic_2.13-3.2.0-sources.jar"
                         }
                     ]
                 },
