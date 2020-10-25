@@ -57,6 +57,7 @@ case class Rational(n: Int, d: Int) {
 }
 
 object Rational {
+
   implicit def intToRational(n: Int): Rational = Rational(n)
   implicit def floatToRational(n: Double): Rational = {
     var m = 1

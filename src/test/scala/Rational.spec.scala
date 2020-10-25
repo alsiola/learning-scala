@@ -6,15 +6,21 @@ import matchers._
 
 class RationalSpec extends AnyFlatSpec with should.Matchers {
 
-  "A Rational" should "print a nice string" in {
+  "Rational" should "print a nice string" in {
     val r = Rational(1, 2)
 
     r.toString should include("Rational(1/2)")
   }
 
-  "A Rational" should "be normalised" in {
+  "Rational" should "be normalised" in {
     val r = Rational(4, 8)
 
     r should equal(Rational(1, 2))
+  }
+
+  "Rational" should "throw InvalidArgumentException if denominator is zero" in {
+    a[IllegalArgumentException] should be thrownBy {
+      Rational(1, 0)
+    }
   }
 }
