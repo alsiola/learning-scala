@@ -4,7 +4,7 @@ import org.scalatest._
 import flatspec._
 import matchers._
 
-class ExampleSpec extends AnyFlatSpec with should.Matchers {
+class RationalSpec extends AnyFlatSpec with should.Matchers {
 
   "A Rational" should "print a nice string" in {
     val r = Rational(1, 2)
