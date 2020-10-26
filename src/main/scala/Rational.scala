@@ -73,7 +73,7 @@ object Rational {
   ): Rational =
     (a - a.floor) match {
       case rem if ~=(rem, 0) => Rational(a.toInt, r)
-      case rem               => floatToRational(10 * a, 10 * r)
+      case _                 => floatToRational(10 * a, 10 * r)
     }
 
   implicit def intToRational(n: Int): Rational = Rational(n)
