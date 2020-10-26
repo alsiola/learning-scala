@@ -23,4 +23,10 @@ class RationalSpec extends AnyFlatSpec with should.Matchers {
       Rational(1, 0)
     }
   }
+
+  "Rational" should "accept Doubles" in {
+    val r = Rational(1.2)
+
+    r should equal(Rational(6, 5))
+  }
 }

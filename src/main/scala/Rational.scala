@@ -1,7 +1,12 @@
 package alsiola.Rational
 
-case class Rational(n: Int, d: Int) {
-  require(d != 0, "Denominator must be greater than zero")
+case class Rational(n: Int, d: Int) extends Ordered[Rational] {
+
+  override def compare(that: Rational): Int = {
+    (this.numerator * that.denominator) - (that.numerator * this.denominator)
+  }
+
+  require(d != 0, s"Denominator must be greater than zero, received $n / $d")
   val g = gcd(n.abs, d.abs)
   val numerator = n / g
   val denominator = d / g
@@ -58,25 +63,29 @@ case class Rational(n: Int, d: Int) {
 
 object Rational {
 
-  implicit def intToRational(n: Int): Rational = Rational(n)
-  implicit def floatToRational(n: Double): Rational = {
-    var m = 1
-    var a = n
-
-    while (a - a.floor > 0) {
-      a *= m
-      m *= 10
-    }
-
-    Rational(a.toInt, m / 10)
+  private def ~=(a: Double, b: Double): Boolean = {
+    Math.abs(a - b) < 0.01
   }
+
+  private def floatToRational(a: Double, r: Int): Rational = {
+    val fl = a.floor
+    (a - fl) match {
+      case n if ~=(n, 0) => Rational(a.toInt, r)
+      case m => {
+        Rational(fl.toInt) + floatToRational(10 * m, 10 * r)
+      }
+    }
+  }
+
+  implicit def intToRational(n: Int): Rational = Rational(n)
+  implicit def floatToRational(n: Double): Rational = floatToRational(n, 1)
   def apply(n: Int, d: Int): Rational = new Rational(n, d)
   def apply(n: Int): Rational = apply(n, 1)
-  def apply = floatToRational _
+  def apply(n: Double) = floatToRational(n, 1)
 }
 
 object Program extends App {
-  val x = Rational(1, 5)
-
-  println(0.4 + x)
+  val x = Rational(1, 2)
+  val y = Rational(1.06)
+  println(y)
 }
