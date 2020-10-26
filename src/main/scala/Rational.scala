@@ -1,17 +1,13 @@
 package alsiola.Rational
 
 case class Rational(n: Int, d: Int) extends Ordered[Rational] {
-
-  override def compare(that: Rational): Int = {
-    (this.numerator * that.denominator) - (that.numerator * this.denominator)
-  }
-
   require(d != 0, s"Denominator must be greater than zero, received $n / $d")
   val g = gcd(n.abs, d.abs)
   val numerator = n / g
   val denominator = d / g
 
   override def toString(): String = s"Rational($numerator/$denominator)"
+
   override def equals(obj: Any): Boolean =
     obj match {
       case r: Rational =>
@@ -19,7 +15,9 @@ case class Rational(n: Int, d: Int) extends Ordered[Rational] {
       case _ => false
     }
 
-  def this(n: Int) = this(n, 1)
+  override def compare(that: Rational): Int = {
+    (this.numerator * that.denominator) - (that.numerator * this.denominator)
+  }
 
   def +(other: Rational): Rational =
     Rational(
