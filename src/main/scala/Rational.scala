@@ -64,18 +64,17 @@ case class Rational(n: Int, d: Int) extends Ordered[Rational] {
 object Rational {
 
   private def ~=(a: Double, b: Double): Boolean = {
-    Math.abs(a - b) < 0.01
+    Math.abs(a - b) < 0.0001
   }
 
-  private def floatToRational(a: Double, r: Int): Rational = {
-    val fl = a.floor
-    (a - fl) match {
-      case n if ~=(n, 0) => Rational(a.toInt, r)
-      case m => {
-        Rational(fl.toInt) + floatToRational(10 * m, 10 * r)
-      }
+  private def floatToRational(
+      a: Double,
+      r: Int
+  ): Rational =
+    (a - a.floor) match {
+      case rem if ~=(rem, 0) => Rational(a.toInt, r)
+      case rem               => floatToRational(10 * a, 10 * r)
     }
-  }
 
   implicit def intToRational(n: Int): Rational = Rational(n)
   implicit def floatToRational(n: Double): Rational = floatToRational(n, 1)
@@ -85,7 +84,6 @@ object Rational {
 }
 
 object Program extends App {
-  val x = Rational(1, 2)
-  val y = Rational(1.06)
+  val y = Rational(13.43)
   println(y)
 }
