@@ -61,9 +61,7 @@ case class Rational(n: Int, d: Int) extends Ordered[Rational] {
 
 object Rational {
   private implicit class CloseDouble(val n: Double) {
-    def ~=(that: Double) = {
-      Math.abs(n - that) < 0.0001
-    }
+    def ~=(that: Double) = Math.abs(n - that) < 0.0001
   }
 
   private def floatToRational(
