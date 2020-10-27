@@ -6,9 +6,8 @@ trait Simplify extends Rational {
     (n / div, d / div)
   }
 
-  private def gcd(a: Int, b: Int): Int =
-    b match {
-      case 0 => a
-      case _ => gcd(b, a % b)
-    }
+  private val gcd: (Int, Int) => Int = {
+    case (a, 0) => a
+    case (a, b) => gcd(b, a % b)
+  }
 }
