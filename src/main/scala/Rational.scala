@@ -41,10 +41,6 @@ case class Rational(n: Int, d: Int) extends Ordered[Rational] {
 
   def /(other: Rational): Rational = this * other.reciprocal
 
-  def +(other: Int): Rational = this + Rational(other)
-  def -(other: Int): Rational = this - Rational(other)
-  def *(other: Int): Rational = this * Rational(other)
-  def /(other: Int): Rational = this / Rational(other)
   def +(other: Double): Rational = this + Rational(other)
   def -(other: Double): Rational = this - Rational(other)
   def *(other: Double): Rational = this * Rational(other)
@@ -82,5 +78,5 @@ object Rational {
 
 object Program extends App {
   val y = Rational(13.43)
-  println(y)
+  println(1 + y)
 }
