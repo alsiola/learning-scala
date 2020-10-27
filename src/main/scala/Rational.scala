@@ -70,10 +70,10 @@ object Rational {
       a: Double,
       d: Int
   ): Rational =
-    (a - a.floor) match {
-      case r if r ~= 0 => Rational(a.toInt, d)
-      case _           => floatToRational(10 * a, 10 * d)
-    }
+    if (0 ~= a - a.floor)
+      Rational(a.toInt, d)
+    else
+      floatToRational(10 * a, 10 * d)
 
   implicit def intToRational(n: Int): Rational = Rational(n)
   implicit def floatToRational(n: Double): Rational = floatToRational(n, 1)
