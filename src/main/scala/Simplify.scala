@@ -1,6 +1,4 @@
-package alsiola.Precision
-
-import alsiola.Rational.Rational
+package alsiola.Rational
 
 trait Simplify extends Rational {
   abstract override def simplify(n: Int, d: Int) = {

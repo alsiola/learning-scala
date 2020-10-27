@@ -1,8 +1,6 @@
 package alsiola.Rational
 
-import alsiola.Precision.Simplify
-
-case class Rational(n: Int, d: Int) extends Ordered[Rational] {
+class Rational(n: Int, d: Int) extends Ordered[Rational] {
   require(d != 0, s"Denominator must be greater than zero, received $n / $d")
   val (num, den) = simplify(n, d)
   val numerator = num
@@ -76,7 +74,9 @@ object Rational {
   }
 }
 
-class SimpleRational(n: Int, d: Int) extends Rational(n, d) with Simplify
+sealed case class SimpleRational(n: Int, d: Int)
+    extends Rational(n, d)
+    with Simplify
 object SimpleRational {
   def apply(n: Int, d: Int): SimpleRational = new SimpleRational(n, d)
   def apply(n: Int): SimpleRational = apply(n, 1)
