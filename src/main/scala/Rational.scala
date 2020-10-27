@@ -58,14 +58,13 @@ object Rational {
     def ~=(that: Double) = Math.abs(n - that) < 0.0001
   }
 
-  def floatToRational(
-      a: Double,
-      d: Int
-  ): (Int, Int) =
-    if (0 ~= a - a.floor)
-      (a.toInt, d)
-    else
-      floatToRational(10 * a, 10 * d)
+  val floatToRational: (
+      Double,
+      Int
+  ) => (Int, Int) = {
+    case (x, y) if (0 ~= x - x.floor) => (x.toInt, y)
+    case (x, y)                       => floatToRational(10 * x, 10 * y)
+  }
 
   implicit def intToRational(n: Int): Rational = Rational(n)
   implicit def floatToRational(n: Double): Rational = apply(n)

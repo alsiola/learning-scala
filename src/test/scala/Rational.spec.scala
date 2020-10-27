@@ -1,8 +1,7 @@
-package alsiola.Rational
-
 import org.scalatest._
 import flatspec._
 import matchers._
+import alsiola.Rational.{SimpleRational => Rational}
 
 class RationalSpec extends AnyFlatSpec with should.Matchers {
 
