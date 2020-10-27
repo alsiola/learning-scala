@@ -1,10 +1,14 @@
 package alsiola.Rational
 
+import alsiola.Precision.Simplify
+
 case class Rational(n: Int, d: Int) extends Ordered[Rational] {
   require(d != 0, s"Denominator must be greater than zero, received $n / $d")
-  val g = gcd(n.abs, d.abs)
-  val numerator = n / g
-  val denominator = d / g
+  val (num, den) = simplify(n, d)
+  val numerator = num
+  val denominator = den
+
+  def simplify(num: Int, den: Int) = (num, den)
 
   override def toString(): String = s"Rational($numerator/$denominator)"
 
@@ -47,12 +51,6 @@ case class Rational(n: Int, d: Int) extends Ordered[Rational] {
   def /(other: Double): Rational = this / Rational(other)
 
   def reciprocal = Rational(denominator, numerator)
-
-  private def gcd(a: Int, b: Int): Int =
-    b match {
-      case 0 => a
-      case _ => gcd(b, a % b)
-    }
 }
 
 object Rational {
@@ -60,23 +58,38 @@ object Rational {
     def ~=(that: Double) = Math.abs(n - that) < 0.0001
   }
 
-  private def floatToRational(
+  def floatToRational(
       a: Double,
       d: Int
-  ): Rational =
+  ): (Int, Int) =
     if (0 ~= a - a.floor)
-      Rational(a.toInt, d)
+      (a.toInt, d)
     else
       floatToRational(10 * a, 10 * d)
 
   implicit def intToRational(n: Int): Rational = Rational(n)
-  implicit def floatToRational(n: Double): Rational = floatToRational(n, 1)
+  implicit def floatToRational(n: Double): Rational = apply(n)
   def apply(n: Int, d: Int): Rational = new Rational(n, d)
   def apply(n: Int): Rational = apply(n, 1)
-  def apply(n: Double) = floatToRational(n, 1)
+  def apply(n: Double): Rational = {
+    val (nu, de) = floatToRational(n, 1)
+    apply(nu, de)
+  }
+}
+
+class SimpleRational(n: Int, d: Int) extends Rational(n, d) with Simplify
+object SimpleRational {
+  def apply(n: Int, d: Int): SimpleRational = new SimpleRational(n, d)
+  def apply(n: Int): SimpleRational = apply(n, 1)
+  def apply(n: Double): SimpleRational = {
+    val (nu, de) = Rational.floatToRational(n, 1)
+    apply(nu, de)
+  }
 }
 
 object Program extends App {
-  val y = Rational(13.43)
-  println(1 + y)
+  val x = Rational(0.2)
+  val y = SimpleRational(0.2)
+  println(x)
+  println(y)
 }
