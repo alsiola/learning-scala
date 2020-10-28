@@ -85,10 +85,3 @@ object SimpleRational {
     apply(nu, de)
   }
 }
-
-object Program extends App {
-  val x = Rational(0.2)
-  val y = SimpleRational(0.2)
-  println(x)
-  println(y)
-}
