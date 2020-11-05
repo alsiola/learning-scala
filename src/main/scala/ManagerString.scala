@@ -21,7 +21,7 @@ class ManagerStrings(attributes: Map[String, Map[String, String]])
   def quote = dQuote | sQuote
   def optQuote = opt(quote)
 
-  def entityName = """[a-zA-Z0-9\s,\?\!\\\/&]+""".r
+  def entityName = """[a-zA-Z0-9\s,\?\!\\\/&]+""".r ^^ { x => x.trim }
 
   def attribute: Parser[Map[String, String]] =
     optQuote ~> entityName <~ optQuote ^^ { x =>

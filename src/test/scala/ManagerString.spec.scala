@@ -43,6 +43,16 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
     actual shouldEqual expected
   }
 
+  "ManagerString parsing" should "handle whitespace" in {
+    val i = " Department : 'Sales' "
+
+    val actual = ManagerStrings.parse(i).get
+
+    val expected = List(List("salesid"))
+
+    actual shouldEqual expected
+  }
+
   "ManagerString parsing" should "handle segments with commas" in {
     val i = "Department:'P, E and D'"
 
@@ -94,6 +104,23 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
 
     val expected =
       List(List("salesid", "newcastleid"), List("salesid", "londonid"))
+
+    actual shouldEqual expected
+  }
+
+  "ManagerString parsing" should "parse multiple * segments" in {
+    val i = "Department:*,Location:*"
+
+    val actual = ManagerStrings.parse(i).get
+
+    val expected =
+      List(
+        List("salesid"),
+        List("marketingid"),
+        List("pedid"),
+        List("newcastleid"),
+        List("londonid")
+      )
 
     actual shouldEqual expected
   }
