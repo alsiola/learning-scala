@@ -1,11 +1,11 @@
-import alsiola.Rational._
-import alsiola.Util.Util
+import alsiola.Util
+import java.io.FileReader
+import alsiola.Util.JSONParser
 
 object Program extends App {
-  val x = List(1, 2)
-  val y = List(3, 4)
+  val reader = new FileReader("input.json")
 
-  val xy = Util.append(x, y)
+  val j = new JSONParser();
 
-  println(Util.len(xy))
+  println(j.parseAll(j.obj, reader))
 }

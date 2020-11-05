@@ -1,4 +1,5 @@
 package alsiola.Rational
+import scala.language.implicitConversions
 
 class Rational(n: Int, d: Int) extends Ordered[Rational] {
   require(d != 0, s"Denominator must be greater than zero, received $n / $d")
@@ -10,16 +11,19 @@ class Rational(n: Int, d: Int) extends Ordered[Rational] {
 
   override def toString(): String = s"Rational($numerator/$denominator)"
 
-  override def equals(obj: Any): Boolean =
-    obj match {
-      case r: Rational =>
-        numerator == r.numerator && denominator == r.denominator
-      case _ => false
-    }
-
   override def compare(that: Rational): Int = {
     (this.numerator * that.denominator) - (that.numerator * this.denominator)
   }
+
+  override def equals(obj: Any): Boolean =
+    obj match {
+      case r: Rational =>
+        (r canEqual this) &&
+          numerator == r.numerator && denominator == r.denominator
+      case _ => false
+    }
+
+  def canEqual(other: Any) = other.isInstanceOf[Rational]
 
   def +(other: Rational): Rational =
     Rational(
@@ -77,6 +81,7 @@ object Rational {
 sealed case class SimpleRational(n: Int, d: Int)
     extends Rational(n, d)
     with Simplify
+
 object SimpleRational {
   def apply(n: Int, d: Int): SimpleRational = new SimpleRational(n, d)
   def apply(n: Int): SimpleRational = apply(n, 1)
