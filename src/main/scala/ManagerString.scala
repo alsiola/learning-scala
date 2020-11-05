@@ -2,7 +2,7 @@ package com.alsiola.ManagerStrings
 
 import scala.util.parsing.combinator._
 
-class ManagerStringParser(attributes: Map[String, Map[String, String]])
+class ManagerStrings(attributes: Map[String, Map[String, String]])
     extends JavaTokenParsers {
 
   /**
@@ -36,39 +36,24 @@ class ManagerStringParser(attributes: Map[String, Map[String, String]])
       case a ~ ":" ~ s   => List(List(a(s)))
     }
 
-  /**
-    * TODO: Abstract over this length pattern for arbitrary length of x
-    */
-  def authorizedSegmentGroup: Parser[List[List[List[String]]]] =
-    repsep(authorizedSegment, "+") ^^ { x =>
-      {
-        if (x.length < 2) x
-        else if (x.length < 3)
-          for {
-            elx <- x(0)
-            ely <- x(1)
-          } yield elx.flatMap(xx => ely.map(yy => List(xx, yy)))
-        else {
-          for {
-            elx <- x(0)
-            ely <- x(1)
-            elz <- x(2)
-          } yield elx.flatMap(xx =>
-            ely.flatMap(yy => elz.map(zz => List(xx, yy, zz)))
-          )
-        }
-      }
+  def authorizedSegmentGroup: Parser[List[List[String]]] =
+    repsep(authorizedSegment, "+") ^^ {
+      case Nil => Nil
+      case x =>
+        x.reduce((o, xn) => o.flatMap(e => xn.map(ex => e ++ ex)))
     }
 
   def authorizedSegments: Parser[List[List[String]]] =
-    repsep(authorizedSegmentGroup, ",") ^^ { x => x.flatten.flatten }
+    repsep(authorizedSegmentGroup, ",") ^^ { x => x.flatten }
 }
 
-object ManagerStringParser {
-  def apply(
+object ManagerStrings {
+  case class AttributeMap(val attributes: Map[String, Map[String, String]]) {}
+
+  def parse(
       in: String
-  )(implicit attributes: Map[String, Map[String, String]]) = {
-    val p = new ManagerStringParser(attributes)
+  )(implicit attributes: AttributeMap) = {
+    val p = new ManagerStrings(attributes.attributes)
     p.parseAll(p.authorizedSegments, in)
   }
 }

@@ -5,26 +5,28 @@ import flatspec._
 import matchers._
 
 class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
-  implicit val attributes = Map(
-    "Department" -> Map(
-      "Sales" -> "salesid",
-      "Marketing" -> "marketingid",
-      "P, E and D" -> "pedid"
-    ),
-    "Location" -> Map(
-      "Newcastle" -> "newcastleid",
-      "London" -> "londonid"
-    ),
-    "Gender" -> Map(
-      "Male" -> "maleid",
-      "Female" -> "femaleid"
+  implicit val attributes = ManagerStrings.AttributeMap(
+    Map(
+      "Department" -> Map(
+        "Sales" -> "salesid",
+        "Marketing" -> "marketingid",
+        "P, E and D" -> "pedid"
+      ),
+      "Location" -> Map(
+        "Newcastle" -> "newcastleid",
+        "London" -> "londonid"
+      ),
+      "Gender" -> Map(
+        "Male" -> "maleid",
+        "Female" -> "femaleid"
+      )
     )
   )
 
   "ManagerString parsing" should "return an empty list for empty string input" in {
     val i = ""
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected = List()
 
@@ -34,7 +36,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse a simple att:seg pair" in {
     val i = "Department:'Sales'"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected = List(List("salesid"))
 
@@ -44,7 +46,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "handle segments with commas" in {
     val i = "Department:'P, E and D'"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected = List(List("pedid"))
 
@@ -54,7 +56,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse multiple att:seg pairs" in {
     val i = "Department:'Sales',Department:'Marketing'"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected = List(List("salesid"), List("marketingid"))
 
@@ -64,7 +66,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse att:* pairs" in {
     val i = "Department:*"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected = List(
       List("salesid"),
@@ -78,7 +80,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse combined att:seg pairs" in {
     val i = "Department:'Sales'+Location:'London'"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected = List(List("salesid", "londonid"))
 
@@ -88,7 +90,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse a complex string" in {
     val i = "Department:'Sales'+Location:*"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected =
       List(List("salesid", "newcastleid"), List("salesid", "londonid"))
@@ -99,7 +101,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse another complex string" in {
     val i = "Department:*+Location:*"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected =
       List(
@@ -117,7 +119,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse ridiculously complex string" in {
     val i = "Department:*+Location:*+Gender:*"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected =
       List(
@@ -141,7 +143,7 @@ class ManagerStringSpec extends AnyFlatSpec with should.Matchers {
   "ManagerString parsing" should "parse another ridiculously complex string" in {
     val i = "Department:*+Location:*+Gender:'Male'"
 
-    val actual = ManagerStringParser(i).get
+    val actual = ManagerStrings.parse(i).get
 
     val expected =
       List(
